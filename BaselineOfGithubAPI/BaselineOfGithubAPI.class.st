@@ -34,7 +34,7 @@ BaselineOfGithubAPI >> defineGroups: spec [
 
 { #category : 'baselines' }
 BaselineOfGithubAPI >> definePackages: spec [
-
+"define the package to load"
 	spec
 		package: 'GithubAPI-Core'.
 	spec package: 'GithubAPI-Core-Tests' with: [ spec requires: #('GithubAPI-Core' 'Mocketry') ].
