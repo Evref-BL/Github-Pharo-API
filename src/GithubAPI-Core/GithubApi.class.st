@@ -34,6 +34,11 @@ GithubApi >> commits [
 ]
 
 { #category : 'accessing' }
+GithubApi >> contents [
+	^ GithubContents new githubAPI: self. 
+]
+
+{ #category : 'accessing' }
 GithubApi >> hostUrl [
 
 	^ hostUrl
