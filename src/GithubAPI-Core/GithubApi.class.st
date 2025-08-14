@@ -74,6 +74,11 @@ GithubApi >> privateToken: anObject [
 ]
 
 { #category : 'accessing' }
+GithubApi >> repositories [
+	^ GithubRepositories new githubAPI: self. 
+]
+
+{ #category : 'accessing' }
 GithubApi >> users [
 	^ GithubUsers new githubAPI: self 
 ]

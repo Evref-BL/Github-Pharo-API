@@ -282,7 +282,7 @@ GithubOrganizationsTest >> testGetRepositoriesOfOrganization [
 
 	(gitlabRessource stub getAll: endpoint withParams: Dictionary new) willReturn: response.
 
-	.
+
 	"When"
 	result := gitlabRessource getRepositoriesOfOrganization: 'evref-bl'.
 	
@@ -325,4 +325,36 @@ GithubOrganizationsTest >> testGetRepositoriesOfOrganizationPerPagePage [
 	self assert: (result isArray).
 	self assert: (result size ) equals: 1 .
 	self assert: (result first at: #name) equals: 'Moose-REST-API'.
+]
+
+{ #category : 'tests' }
+GithubOrganizationsTest >> testGetRepositoryOfOrganization [
+
+	| hostUrl gitlabApi result client endpoint gitlabRessource data responseMessage response |
+	
+	"Given"
+	hostUrl := 'https://www.url.com'.
+	client := ZnClient new.
+	
+	gitlabApi := GithubApi new privateToken: 'token'; hostUrl: hostUrl; client: client.
+	
+	endpoint := ('/' join: {'/orgs' . 'evref-bl' . 'repos'}).
+	data := { 'param' -> 'value' } asDictionary.
+	
+	responseMessage := 'Evref-BL'.
+	response :=  NeoJSONWriter toString: ((NeoJSONReader fromString: self orgsEvrefBlRepo) first).
+
+	gitlabRessource := gitlabApi organizations .
+	
+
+	(client stub get) willReturn: response.
+
+	
+	"When"
+	result := gitlabRessource getRepository: 'Moose-REST-API' ofOrganization: 'evref-bl'.
+	
+	"Then"
+	self assert: (result isDictionary).
+	self assert: (result at: #name) equals: 'Moose-REST-API'.
+
 ]

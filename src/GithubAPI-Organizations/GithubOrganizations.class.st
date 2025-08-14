@@ -49,3 +49,13 @@ GithubOrganizations >> getRepositoriesOfOrganization: anOrgName perPage: perPage
 	
 	^ self getByPage: pageIndex perPage: perPage from: endpoint withParams: Dictionary new. 
 ]
+
+{ #category : 'as yet unclassified' }
+GithubOrganizations >> getRepository: aRepoName ofOrganization: anOrgName [ 
+	"https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-organization-repositories"
+	
+	| endpoint |
+	
+	endpoint := ('/' join: {'/repos' . anOrgName asString . aRepoName asString }).
+	^ self get: endpoint withParams: Dictionary new. 
+]
