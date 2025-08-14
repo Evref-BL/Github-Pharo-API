@@ -12,6 +12,11 @@ Class {
 }
 
 { #category : 'accessing' }
+GithubApi >> branches [
+	^ GithubBranches new githubAPI: self. 
+]
+
+{ #category : 'accessing' }
 GithubApi >> client [
 
 	^ client
@@ -21,6 +26,11 @@ GithubApi >> client [
 GithubApi >> client: anObject [
 
 	client := anObject
+]
+
+{ #category : 'accessing' }
+GithubApi >> commits [
+	^GithubCommits new githubAPI: self.
 ]
 
 { #category : 'accessing' }
