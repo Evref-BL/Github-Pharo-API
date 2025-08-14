@@ -83,6 +83,11 @@ GithubApi >> privateToken: anObject [
 	self client headerAt: #'Authorization' add: ('token ', anObject)
 ]
 
+{ #category : 'ressources' }
+GithubApi >> pullRequests [
+	^ GithubPullRequests new githubAPI: self.
+]
+
 { #category : 'accessing' }
 GithubApi >> repositories [
 	^ GithubRepositories new githubAPI: self. 
