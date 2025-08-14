@@ -67,8 +67,3 @@ GithubApi >> privateToken: anObject [
 
 	self client headerAt: #'Authorization' add: ('token ', anObject)
 ]
-
-{ #category : 'accessing' }
-GithubApi >> users [
-	^ GithubUsers new githubAPI: self 
-]
