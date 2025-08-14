@@ -23,7 +23,28 @@ GithubUsers >> getAllWithParams: paramsDict [
 	"https://docs.github.com/en/rest/users/users?apiVersion=2022-11-28#list-users"
 
 	| endpoint |
-	endpoint := '/users'.
+	endpoint := '/users/'.
 	
 	^self getAll: endpoint withParams: paramsDict. 
+]
+
+{ #category : 'as yet unclassified' }
+GithubUsers >> getUserId: anId [
+	
+	"https://docs.github.com/en/rest/users/users?apiVersion=2022-11-28#get-a-user-using-their-id"
+	
+		| endpoint |
+
+	endpoint := ('/user/' , anId asString).
+	^ self get: endpoint withParams: Dictionary new. 
+
+]
+
+{ #category : 'as yet unclassified' }
+GithubUsers >> getUsername: userName [
+	
+	"https://docs.github.com/en/rest/users/users?apiVersion=2022-11-28#get-a-user"
+	
+	^ self get: userName 
+
 ]

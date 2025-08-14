@@ -41,4 +41,7 @@ BaselineOfGithubAPI >> definePackages: spec [
 	
 	spec package: 'GitlabAPI-Users' with: [ spec requires: #('GitlabAPI-Core') ].
 	spec package: 'GitlabAPI-Users-Tests' with: [ spec requires: #('GitlabAPI-Users' 'Mocketry') ].
+	
+	spec package: 'GitlabAPI-Organizations' with: [ spec requires: #('GitlabAPI-Core') ].
+	spec package: 'GitlabAPI-Organizations-Tests' with: [ spec requires: #('GitlabAPI-Organizations' 'Mocketry') ].
 ]

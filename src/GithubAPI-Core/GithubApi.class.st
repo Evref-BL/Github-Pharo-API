@@ -44,6 +44,11 @@ GithubApi >> initialize [
 			 yourself)
 ]
 
+{ #category : 'organizations' }
+GithubApi >> organizations [
+	^ GithubOrganizations new githubAPI: self. 
+]
+
 { #category : 'accessing' }
 GithubApi >> output [
 

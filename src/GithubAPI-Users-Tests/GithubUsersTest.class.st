@@ -38,6 +38,73 @@ GithubUsersTest >> testGet [
 
 ]
 
+{ #category : 'tests' }
+GithubUsersTest >> testGetUnknowUsers [
+
+	| hostUrl gitlabApi result client endpoint gitlabRessource data responseMessage response |
+	
+	"Given"
+	hostUrl := 'https://www.url.com'.
+	client := ZnClient new.
+	
+	gitlabApi := GitlabApi new privateToken: 'token'; hostUrl: hostUrl; client: client.
+	
+	endpoint := '/endpoint'.
+	data := { 'param' -> 'value' } asDictionary.
+	
+	responseMessage := 'nhlad'.
+	response := NeoJSONWriter toString: (({#status -> 404 .
+					#documentation_url -> 'https://docs.github.com/rest'.
+					#message -> 'Not Found'}) asDictionary) .
+	
+	gitlabRessource := gitlabApi users.
+	
+	(client stub get) willReturn: response.
+	
+	"When"
+	result := gitlabRessource get: 'fsihcsdpocskcdlqkscjqpod'.
+	
+	"Then"
+	self assert: (result isDictionary) equals: true.
+	self assert: (result at: #status) equals: 404.
+
+]
+
+{ #category : 'tests' }
+GithubUsersTest >> testGetUserId [
+	
+	| hostUrl gitlabApi result client endpoint gitlabRessource data responseMessage response |
+	
+	"Given"
+	hostUrl := 'https://www.url.com'.
+	client := ZnClient new.
+	
+	gitlabApi := GitlabApi new privateToken: 'token'; hostUrl: hostUrl; client: client.
+	
+	endpoint := '/endpoint'.
+	data := { 'param' -> 'value' } asDictionary.
+	
+	responseMessage := 'nhlad'.
+	response := self userAlkalinan.
+	
+	gitlabRessource := gitlabApi users.
+	
+	(client stub get) willReturn: response.
+	
+	"When"
+	result := gitlabRessource get: 19858911.
+	
+	"Then"
+	self assert: (result isDictionary) equals: true.
+	self assert: (result at: #name) equals: responseMessage.
+]
+
+{ #category : 'tests' }
+GithubUsersTest >> testGetUsername [
+
+	self testGet 
+]
+
 { #category : 'as yet unclassified' }
 GithubUsersTest >> userAlkalinan [
 	^ '{
