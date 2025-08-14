@@ -206,7 +206,7 @@ GithubCommitsTest >> testGetAllForRepoOfOwner [
 	
 	githubApi := GithubApi new privateToken: 'token'; hostUrl: hostUrl; client: client.
 	
-	endpoint := ('/' join: {'/repos' . 'octocat' . 'Hello-World' . 'branches'}).
+	endpoint := ('/' join: {'/repos' . 'octocat' . 'Hello-World' . 'commits'}).
 	data := { 'param' -> 'value' } asDictionary.
 	
 	responseMessage := 'Evref-BL'.
@@ -252,4 +252,64 @@ GithubCommitsTest >> testGetCommitForRepoOfOwner [
 	"Then"
 	self assert: (result isDictionary) .
 	self assert: (result at: #sha) equals: '6dcb09b5b57875f334f61aebed695e2e4193db5e'.
+]
+
+{ #category : 'tests' }
+GithubCommitsTest >> testGetForRepoOfOwnerWithParms [
+
+	| hostUrl githubApi result client endpoint gitlabRessource data responseMessage response |
+	
+	"Given"
+	hostUrl := 'https://www.url.com'.
+	client := ZnClient new.
+	
+	githubApi := GithubApi new privateToken: 'token'; hostUrl: hostUrl; client: client.
+	
+	endpoint := '/endpoint'.
+	data := {  } asDictionary.
+	
+	responseMessage := 'Evref-BL'.
+	response := self getAllCommitsExample .
+
+	gitlabRessource := githubApi commits .
+	
+	(client stub get) willReturn: response.
+	
+	"When"
+	result := gitlabRessource getForRepo: 'Hello-World' ofOwner: 'octocat' withParms: data.
+	
+	"Then"
+	self assert: (result isArray) .
+	self assert: (result size ) equals: 1 .
+	self assert: (result first at: #sha) equals: '6dcb09b5b57875f334f61aebed695e2e4193db5e'.
+]
+
+{ #category : 'tests' }
+GithubCommitsTest >> testGetLatestForRepoOfOwner [
+
+	| hostUrl githubApi result client endpoint gitlabRessource data responseMessage response |
+	
+	"Given"
+	hostUrl := 'https://www.url.com'.
+	client := ZnClient new.
+	
+	githubApi := GithubApi new privateToken: 'token'; hostUrl: hostUrl; client: client.
+	
+	endpoint := '/endpoint'.
+	data := { 'param' -> 'value' } asDictionary.
+	
+	responseMessage := 'Evref-BL'.
+	response := self getAllCommitsExample .
+
+	gitlabRessource := githubApi commits .
+	
+	(client stub get) willReturn: response.
+	
+	"When"
+	result := gitlabRessource getLatestForRepo: 'Hello-World' ofOwner: 'octocat'.
+	
+	"Then"
+	self assert: (result isArray) .
+	self assert: (result size ) equals: 1 .
+	self assert: (result first at: #sha) equals: '6dcb09b5b57875f334f61aebed695e2e4193db5e'.
 ]

@@ -8,6 +8,44 @@ Class {
 	#package : 'GithubAPI-Users-Tests'
 }
 
+{ #category : 'as yet unclassified' }
+GithubUsersTest >> getUserExample [
+	^ '{
+  "login": "octocat",
+  "id": 1,
+  "node_id": "MDQ6VXNlcjE=",
+  "avatar_url": "https://github.com/images/error/octocat_happy.gif",
+  "gravatar_id": "",
+  "url": "https://api.github.com/users/octocat",
+  "html_url": "https://github.com/octocat",
+  "followers_url": "https://api.github.com/users/octocat/followers",
+  "following_url": "https://api.github.com/users/octocat/following{/other_user}",
+  "gists_url": "https://api.github.com/users/octocat/gists{/gist_id}",
+  "starred_url": "https://api.github.com/users/octocat/starred{/owner}{/repo}",
+  "subscriptions_url": "https://api.github.com/users/octocat/subscriptions",
+  "organizations_url": "https://api.github.com/users/octocat/orgs",
+  "repos_url": "https://api.github.com/users/octocat/repos",
+  "events_url": "https://api.github.com/users/octocat/events{/privacy}",
+  "received_events_url": "https://api.github.com/users/octocat/received_events",
+  "type": "User",
+  "site_admin": false,
+  "name": "monalisa octocat",
+  "company": "GitHub",
+  "blog": "https://github.com/blog",
+  "location": "San Francisco",
+  "email": "octocat@github.com",
+  "hireable": false,
+  "bio": "There once was...",
+  "twitter_username": "monatheoctocat",
+  "public_repos": 2,
+  "public_gists": 1,
+  "followers": 20,
+  "following": 0,
+  "created_at": "2008-01-14T04:33:35Z",
+  "updated_at": "2008-01-14T04:33:35Z"
+}'
+]
+
 { #category : 'tests' }
 GithubUsersTest >> testGet [
 
@@ -22,15 +60,15 @@ GithubUsersTest >> testGet [
 	endpoint := '/endpoint'.
 	data := { 'param' -> 'value' } asDictionary.
 	
-	responseMessage := 'nhlad'.
-	response := self userAlkalinan.
+	responseMessage := 'monalisa octocat'.
+	response := self getUserExample.
 	
 	gitlabRessource := gitlabApi users.
 	
 	(client stub get) willReturn: response.
 	
 	"When"
-	result := gitlabRessource get: 'alkalinan'.
+	result := gitlabRessource get: 'octocat'.
 	
 	"Then"
 	self assert: (result isDictionary) equals: true.
@@ -52,7 +90,7 @@ GithubUsersTest >> testGetUnknowUsers [
 	endpoint := '/endpoint'.
 	data := { 'param' -> 'value' } asDictionary.
 	
-	responseMessage := 'nhlad'.
+	responseMessage := 'monalisa octocat'.
 	response := NeoJSONWriter toString: (({#status -> 404 .
 					#documentation_url -> 'https://docs.github.com/rest'.
 					#message -> 'Not Found'}) asDictionary) .
@@ -84,15 +122,15 @@ GithubUsersTest >> testGetUserId [
 	endpoint := '/endpoint'.
 	data := { 'param' -> 'value' } asDictionary.
 	
-	responseMessage := 'nhlad'.
-	response := self userAlkalinan.
+	responseMessage := 'monalisa octocat'.
+	response := self getUserExample.
 	
 	gitlabRessource := gitlabApi users.
 	
 	(client stub get) willReturn: response.
 	
 	"When"
-	result := gitlabRessource get: 19858911.
+	result := gitlabRessource get: 1.
 	
 	"Then"
 	self assert: (result isDictionary) equals: true.
@@ -103,44 +141,4 @@ GithubUsersTest >> testGetUserId [
 GithubUsersTest >> testGetUsername [
 
 	self testGet 
-]
-
-{ #category : 'as yet unclassified' }
-GithubUsersTest >> userAlkalinan [
-	^ '{
-  "login": "alkalinan",
-  "id": 19858911,
-  "node_id": "MDQ6VXNlcjE5ODU4OTEx",
-  "avatar_url": "https://avatars.githubusercontent.com/u/19858911?v=4",
-  "gravatar_id": "",
-  "url": "https://api.github.com/users/alkalinan",
-  "html_url": "https://github.com/alkalinan",
-  "followers_url": "https://api.github.com/users/alkalinan/followers",
-  "following_url": "https://api.github.com/users/alkalinan/following{/other_user}",
-  "gists_url": "https://api.github.com/users/alkalinan/gists{/gist_id}",
-  "starred_url": "https://api.github.com/users/alkalinan/starred{/owner}{/repo}",
-  "subscriptions_url": "https://api.github.com/users/alkalinan/subscriptions",
-  "organizations_url": "https://api.github.com/users/alkalinan/orgs",
-  "repos_url": "https://api.github.com/users/alkalinan/repos",
-  "events_url": "https://api.github.com/users/alkalinan/events{/privacy}",
-  "received_events_url": "https://api.github.com/users/alkalinan/received_events",
-  "type": "User",
-  "user_view_type": "public",
-  "site_admin": false,
-  "name": "nhlad",
-  "company": null,
-  "blog": "",
-  "location": null,
-  "email": null,
-  "hireable": null,
-  "bio": "Computer Science Doctor at the university of Montpellier, France.",
-  "twitter_username": null,
-  "public_repos": 18,
-  "public_gists": 0,
-  "followers": 1,
-  "following": 0,
-  "created_at": "2016-06-10T14:30:58Z",
-  "updated_at": "2025-08-01T14:16:13Z"
-}
-'
 ]

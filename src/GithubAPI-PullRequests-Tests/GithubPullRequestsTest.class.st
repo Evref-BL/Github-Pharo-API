@@ -651,21 +651,21 @@ GithubPullRequestsTest >> testGetAllForRepoOfOwner [
 	githubApi := GithubApi new privateToken: 'token'; hostUrl: hostUrl; client: client.
 	
 	endpoint := ('/' join: {'/repos' . 'octocat' . 'Hello-World' . 'pulls'}).
-	data := { 'param' -> 'value' } asDictionary.
+	data := { 'state' -> 'all' } asDictionary.
 	
 	responseMessage := 'Evref-BL'.
 	response := NeoJSONReader fromString: self getAllPrExample .
 
 	gitlabRessource := githubApi pullRequests .
 	
-	(gitlabRessource stub getAll: endpoint withParams: Dictionary new) willReturn: response.
+	(gitlabRessource stub getAll: endpoint withParams: data) willReturn: response.
 	
 	"When"
 	result := gitlabRessource getAllForRepo: 'Hello-World' ofOwner: 'octocat'.
 	
 	"Then"
 	self assert: (result isArray) .
-		self assert: (result size ) equals: 1 .
+	self assert: (result size ) equals: 1 .
 	self assert: (result first at: #id) equals: 1.
 ]
 
@@ -697,6 +697,66 @@ GithubPullRequestsTest >> testGetCommitsOfPullForRepoOfOwner [
 	self assert: (result isArray) .
 	self assert: (result size ) equals: 1 .
 	self assert: (result first at: #sha) equals: '6dcb09b5b57875f334f61aebed695e2e4193db5e'.
+]
+
+{ #category : 'tests' }
+GithubPullRequestsTest >> testGetForRepoOfOwnerWithParms [
+
+	| hostUrl githubApi result client endpoint gitlabRessource data responseMessage response |
+	
+	"Given"
+	hostUrl := 'https://www.url.com'.
+	client := ZnClient new.
+	
+	githubApi := GithubApi new privateToken: 'token'; hostUrl: hostUrl; client: client.
+	
+	endpoint := '/endpoint'.
+	data := { } asDictionary.
+	
+	responseMessage := 'Evref-BL'.
+	response := self getAllPrExample .
+
+	gitlabRessource := githubApi pullRequests .
+	
+	(client stub get) willReturn: response.
+	
+	"When"
+	result := gitlabRessource getForRepo: 'Hello-World' ofOwner: 'octocat' withParms: data.
+	
+	"Then"
+	self assert: (result isArray ) .
+		self assert: (result size ) equals: 1.
+	self assert: (result first at: #id) equals: 1.
+]
+
+{ #category : 'tests' }
+GithubPullRequestsTest >> testGetLatestForRepoOfOwner [
+
+		| hostUrl githubApi result client endpoint gitlabRessource data responseMessage response |
+	
+	"Given"
+	hostUrl := 'https://www.url.com'.
+	client := ZnClient new.
+	
+	githubApi := GithubApi new privateToken: 'token'; hostUrl: hostUrl; client: client.
+	
+	endpoint := '/endpoint'.
+	data := { 'param' -> 'value' } asDictionary.
+	
+	responseMessage := 'Evref-BL'.
+	response := self getAllPrExample .
+
+	gitlabRessource := githubApi pullRequests .
+	
+	(client stub get) willReturn: response.
+	
+	"When"
+	result := gitlabRessource getLatestForRepo: 'Hello-World' ofOwner: 'octocat'.
+	
+	"Then"
+	self assert: (result isArray ) .
+		self assert: (result size ) equals: 1.
+	self assert: (result first at: #id) equals: 1.
 ]
 
 { #category : 'tests' }

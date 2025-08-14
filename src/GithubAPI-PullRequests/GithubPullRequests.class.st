@@ -10,7 +10,7 @@ GithubPullRequests >> getAllForRepo: aRepoName ofOwner: anOwnerName [
 	|endpoint|
 	endpoint := '/' join: { '/repos' . anOwnerName . aRepoName . 'pulls'  }.
 	
-	^ self getAll: endpoint withParams: Dictionary new.
+	^ self getAll: endpoint withParams: ({#state -> #all} asDictionary) .
 ]
 
 { #category : 'as yet unclassified' }
@@ -21,6 +21,26 @@ GithubPullRequests >> getCommitsOfPull: aPullNumber ForRepo: aRepoName ofOwner: 
 	endpoint := '/' join: { '/repos' . anOwnerName . aRepoName . 'pulls' . aPullNumber asString . 'commits' }.
 	
 	^ self getAll: endpoint withParams: Dictionary new.
+]
+
+{ #category : 'get' }
+GithubPullRequests >> getForRepo: aRepoName ofOwner: anOwnerName withParms: parms [ 
+	
+	|endpoint|
+	endpoint := '/' join: { '/repos' . anOwnerName . aRepoName . 'pulls'  }.
+	
+	^ self get: endpoint withParams: parms .
+]
+
+{ #category : 'as yet unclassified' }
+GithubPullRequests >> getLatestForRepo: aRepoName ofOwner: anOwnerName [
+	"https://docs.github.com/en/rest/pulls/pulls?apiVersion=2022-11-28#list-pull-requests"
+	"return default latest PR"
+
+	|endpoint|
+	endpoint := '/' join: { '/repos' . anOwnerName . aRepoName . 'pulls'  }.
+	
+	^ self get: endpoint withParams: ({#state -> #all} asDictionary) .
 ]
 
 { #category : 'as yet unclassified' }
