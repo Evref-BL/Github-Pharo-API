@@ -45,8 +45,8 @@ BaselineOfGithubAPI >> definePackages: spec [
 	spec package: 'GithubAPI-Organizations' with: [ spec requires: #('GithubAPI-Core') ].
 	spec package: 'GithubAPI-Organizations-Tests' with: [ spec requires: #('GithubAPI-Organizations' 'Mocketry') ].
 	
-	spec package: 'GithubAPI-Respositories' with: [ spec requires: #('GithubAPI-Core') ].
-	spec package: 'GithubAPI-Respositories-Tests' with: [ spec requires: #('GithubAPI-Respositories' 'Mocketry') ].
+	spec package: 'GithubAPI-Repositories' with: [ spec requires: #('GithubAPI-Core') ].
+	spec package: 'GithubAPI-Repositories-Tests' with: [ spec requires: #('GithubAPI-Repositories' 'Mocketry') ].
 	
 		spec package: 'GithubAPI-Branches' with: [ spec requires: #('GithubAPI-Core') ].
 	spec package: 'GithubAPI-Branches-Tests' with: [ spec requires: #('GithubAPI-Branches' 'Mocketry') ].
