@@ -55,10 +55,10 @@ BaselineOfGithubAPI >> definePackages: spec [
 	spec package: 'GitlabAPI-Commits-Tests' with: [ spec requires: #('GitlabAPI-Commits' 'Mocketry') ].
 	
 	spec package: 'GitlabAPI-PullRequests' with: [ spec requires: #('GitlabAPI-Core') ].
-	spec package: 'GitlabAPI-PullRequests-Tests' with: [ spec requires: #('GitlabAPI-PullRequests' 'Mocketry'). 
+	spec package: 'GitlabAPI-PullRequests-Tests' with: [ spec requires: #('GitlabAPI-PullRequests' 'Mocketry')]. 
 		
 	spec package: 'GitlabAPI-Contents' with: [ spec requires: #('GitlabAPI-Core') ].
 	spec package: 'GitlabAPI-Contents-Tests' with: [ spec requires: #('GitlabAPI-Contents' 'Mocketry')].
 		
-		].
+	
 ]
