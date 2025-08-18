@@ -59,6 +59,11 @@ GithubApi >> initialize [
 			 yourself)
 ]
 
+{ #category : 'accessing' }
+GithubApi >> issues [
+	^ GithubIssues new githubAPI: self.
+]
+
 { #category : 'organizations' }
 GithubApi >> organizations [
 	^ GithubOrganizations new githubAPI: self. 
