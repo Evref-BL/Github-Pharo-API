@@ -39,26 +39,26 @@ BaselineOfGithubAPI >> definePackages: spec [
 		package: 'GithubAPI-Core'.
 	spec package: 'GithubAPI-Core-Tests' with: [ spec requires: #('GithubAPI-Core' 'Mocketry') ].
 	
-	spec package: 'GitlabAPI-Users' with: [ spec requires: #('GitlabAPI-Core') ].
-	spec package: 'GitlabAPI-Users-Tests' with: [ spec requires: #('GitlabAPI-Users' 'Mocketry') ].
+	spec package: 'GithubAPI-Users' with: [ spec requires: #('GithubAPI-Core') ].
+	spec package: 'GithubAPI-Users-Tests' with: [ spec requires: #('GithubAPI-Users' 'Mocketry') ].
 	
-	spec package: 'GitlabAPI-Organizations' with: [ spec requires: #('GitlabAPI-Core') ].
-	spec package: 'GitlabAPI-Organizations-Tests' with: [ spec requires: #('GitlabAPI-Organizations' 'Mocketry') ].
+	spec package: 'GithubAPI-Organizations' with: [ spec requires: #('GithubAPI-Core') ].
+	spec package: 'GithubAPI-Organizations-Tests' with: [ spec requires: #('GithubAPI-Organizations' 'Mocketry') ].
 	
-	spec package: 'GitlabAPI-Respositories' with: [ spec requires: #('GitlabAPI-Core') ].
-	spec package: 'GitlabAPI-Respositories-Tests' with: [ spec requires: #('GitlabAPI-Respositories' 'Mocketry') ].
+	spec package: 'GithubAPI-Respositories' with: [ spec requires: #('GithubAPI-Core') ].
+	spec package: 'GithubAPI-Respositories-Tests' with: [ spec requires: #('GithubAPI-Respositories' 'Mocketry') ].
 	
-		spec package: 'GitlabAPI-Branches' with: [ spec requires: #('GitlabAPI-Core') ].
-	spec package: 'GitlabAPI-Branches-Tests' with: [ spec requires: #('GitlabAPI-Branches' 'Mocketry') ].
+		spec package: 'GithubAPI-Branches' with: [ spec requires: #('GithubAPI-Core') ].
+	spec package: 'GithubAPI-Branches-Tests' with: [ spec requires: #('GithubAPI-Branches' 'Mocketry') ].
 	
-	spec package: 'GitlabAPI-Commits' with: [ spec requires: #('GitlabAPI-Core') ].
-	spec package: 'GitlabAPI-Commits-Tests' with: [ spec requires: #('GitlabAPI-Commits' 'Mocketry') ].
+	spec package: 'GithubAPI-Commits' with: [ spec requires: #('GithubAPI-Core') ].
+	spec package: 'GithubAPI-Commits-Tests' with: [ spec requires: #('GithubAPI-Commits' 'Mocketry') ].
 	
-	spec package: 'GitlabAPI-PullRequests' with: [ spec requires: #('GitlabAPI-Core') ].
-	spec package: 'GitlabAPI-PullRequests-Tests' with: [ spec requires: #('GitlabAPI-PullRequests' 'Mocketry')]. 
+	spec package: 'GithubAPI-PullRequests' with: [ spec requires: #('GithubAPI-Core') ].
+	spec package: 'GithubAPI-PullRequests-Tests' with: [ spec requires: #('GithubAPI-PullRequests' 'Mocketry')]. 
 		
-	spec package: 'GitlabAPI-Contents' with: [ spec requires: #('GitlabAPI-Core') ].
-	spec package: 'GitlabAPI-Contents-Tests' with: [ spec requires: #('GitlabAPI-Contents' 'Mocketry')].
+	spec package: 'GithubAPI-Contents' with: [ spec requires: #('GithubAPI-Core') ].
+	spec package: 'GithubAPI-Contents-Tests' with: [ spec requires: #('GithubAPI-Contents' 'Mocketry')].
 		
 	
 ]
