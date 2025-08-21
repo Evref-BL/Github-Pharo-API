@@ -11,6 +11,11 @@ Class {
 	#package : 'GithubAPI-Core'
 }
 
+{ #category : 'actions' }
+GithubApi >> actions [
+	^ GithubActions new githubAPI: self.
+]
+
 { #category : 'accessing' }
 GithubApi >> branches [
 	^ GithubBranches new githubAPI: self. 
