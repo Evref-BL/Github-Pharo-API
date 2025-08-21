@@ -60,5 +60,6 @@ BaselineOfGithubAPI >> definePackages: spec [
 	spec package: 'GithubAPI-Contents' with: [ spec requires: #('GithubAPI-Core') ].
 	spec package: 'GithubAPI-Contents-Tests' with: [ spec requires: #('GithubAPI-Contents' 'Mocketry')].
 		
-	
+	spec package: 'GithubAPI-Issue' with: [ spec requires: #('GithubAPI-Core') ].
+	spec package: 'GithubAPI-Issue-Tests' with: [ spec requires: #('GithubAPI-Issue' 'Mocketry')].
 ]

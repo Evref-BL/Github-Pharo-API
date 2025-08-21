@@ -11,6 +11,11 @@ Class {
 	#package : 'GithubAPI-Core'
 }
 
+{ #category : 'actions' }
+GithubApi >> actions [
+	^ GithubActions new githubAPI: self.
+]
+
 { #category : 'accessing' }
 GithubApi >> branches [
 	^ GithubBranches new githubAPI: self. 
@@ -57,6 +62,11 @@ GithubApi >> initialize [
 	self client: (ZnClient new
 			 accept: ZnMimeType applicationJson;
 			 yourself)
+]
+
+{ #category : 'accessing' }
+GithubApi >> issues [
+	^ GithubIssues new githubAPI: self.
 ]
 
 { #category : 'organizations' }
