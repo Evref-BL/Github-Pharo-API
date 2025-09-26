@@ -8,7 +8,7 @@ Class {
 	#package : 'GithubAPI-Issues-Tests'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'examples' }
 GithubIssuesTest >> getIssueExample [
 
 	^ '{
@@ -171,7 +171,7 @@ GithubIssuesTest >> getIssueExample [
 }'
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'examples' }
 GithubIssuesTest >> getIssuesOrgsExample [
 	^ '[
   {
@@ -437,7 +437,7 @@ GithubIssuesTest >> getIssuesOrgsExample [
 ]'
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'examples' }
 GithubIssuesTest >> getIssuesRepoExample [
 
 	^ '[
@@ -603,6 +603,40 @@ GithubIssuesTest >> getIssuesRepoExample [
 ]
 
 { #category : 'tests' }
+GithubIssuesTest >> testGetAllForOrgWithParms [
+
+	| hostUrl githubApi result client endpoint gitlabRessource data response |
+	"Given"
+	hostUrl := 'https://www.url.com'.
+	client := ZnClient new.
+
+	githubApi := GithubApi new
+		             privateToken: 'token';
+		             hostUrl: hostUrl;
+		             client: client.
+
+	endpoint := '/' join: { '/orgs'. 'octocat'. 'issues' }.
+	data := {  } asDictionary.
+
+	response := NeoJSONReader fromString: self getIssuesOrgsExample.
+
+	gitlabRessource := githubApi issues.
+
+	(gitlabRessource stub getAll: endpoint withParams: data) willReturn:
+		response.
+
+	"When"
+	result := gitlabRessource getAllForOrg: 'octocat' withParms: data.
+
+	"Then"
+	self assert: result isArray.
+	self assert: result size equals: 1.
+	self assert: (result first at: #id) equals: 1.
+
+	self assert: (result first at: #node_id) equals: 'MDU6SXNzdWUx'
+]
+
+{ #category : 'tests' }
 GithubIssuesTest >> testGetAllForRepoOfOwnerWithParms [
 
 	| hostUrl githubApi result client endpoint gitlabRessource data response |
@@ -642,7 +676,125 @@ GithubIssuesTest >> testGetAllForRepoOfOwnerWithParms [
 ]
 
 { #category : 'tests' }
+GithubIssuesTest >> testGetForOrgWithParms [
+
+	| hostUrl githubApi result client endpoint gitlabRessource data response |
+	"Given"
+	hostUrl := 'https://www.url.com'.
+	client := ZnClient new.
+
+	githubApi := GithubApi new
+		             privateToken: 'token';
+		             hostUrl: hostUrl;
+		             client: client.
+
+	endpoint := '/' join:
+		            { '/orgs'. 'octocat'. 'issues' }.
+	data := {  } asDictionary.
+
+	response := NeoJSONReader fromString: self getIssuesOrgsExample.
+
+	gitlabRessource := githubApi issues.
+
+	(gitlabRessource stub get: endpoint withParams: data) willReturn:
+		response.
+
+	"When"
+	result := gitlabRessource getForOrg: 'octocat' withParms: data.
+
+	"Then"
+	self assert: result isArray.
+	self assert: result size equals: 1.
+	self assert: (result first at: #id) equals: 1.
+
+	self assert: (result first at: #node_id) equals: 'MDU6SXNzdWUx'
+]
+
+{ #category : 'tests' }
 GithubIssuesTest >> testGetForRepoOfOwnerWithParms [
+
+	| hostUrl githubApi result client endpoint gitlabRessource data response |
+	"Given"
+	hostUrl := 'https://www.url.com'.
+	client := ZnClient new.
+
+	githubApi := GithubApi new
+		             privateToken: 'token';
+		             hostUrl: hostUrl;
+		             client: client.
+
+	endpoint := '/' join: {
+			            '/repos'.
+			            'octocat'.
+							'Hello-World'.
+			            'issues' }.
+	data := {  } asDictionary.
+
+	response := NeoJSONReader fromString: self getIssuesRepoExample.
+
+	gitlabRessource := githubApi issues.
+
+	(gitlabRessource stub get: endpoint withParams: data) willReturn:
+		response.
+
+	"When"
+	result := gitlabRessource
+		          getForRepo: 'Hello-World'
+		          ofOwner: 'octocat'
+		          withParms: data.
+
+	"Then"
+	self assert: result isArray.
+	self assert: result size equals: 1.
+	self assert: (result first at: #id) equals: 1.
+
+	self assert: (result first at: #node_id) equals: 'MDU6SXNzdWUx'
+]
+
+{ #category : 'tests' }
+GithubIssuesTest >> testGetIssueForRepoOfOwnerWithParms [
+
+	| hostUrl githubApi result client endpoint gitlabRessource data response |
+	"Given"
+	hostUrl := 'https://www.url.com'.
+	client := ZnClient new.
+
+	githubApi := GithubApi new
+		             privateToken: 'token';
+		             hostUrl: hostUrl;
+		             client: client.
+
+	endpoint := '/' join: {
+			            '/repos'.
+			            'octocat'.
+			            'Hello-World'.
+			            'issues'.
+			            123 asString }.
+	data := {  } asDictionary.
+
+	response := NeoJSONReader fromString: self getIssueExample .
+
+	gitlabRessource := githubApi issues.
+
+	(gitlabRessource stub get: endpoint withParams: data) willReturn:
+		response.
+
+
+	"When"
+	result := gitlabRessource
+		          getIssue: '123'
+		          ForRepo: 'Hello-World'
+		          ofOwner: 'octocat'
+		          withParms: data.
+
+	"Then"
+	self assert: result isDictionary.
+	self assert: (result at: #id) equals: 1.
+	self assert: (result at: #node_id) equals: 'MDU6SXNzdWUx'
+]
+
+{ #category : 'tests' }
+GithubIssuesTest >> testGetLatestsForOrg [
 
 	| hostUrl githubApi result client endpoint gitlabRessource data response |
 	"Given"
@@ -657,67 +809,21 @@ GithubIssuesTest >> testGetForRepoOfOwnerWithParms [
 	endpoint := '/endpoint'.
 	data := {  } asDictionary.
 
-	response := self getIssuesRepoExample.
+	response := self getIssuesOrgsExample.
 
 	gitlabRessource := githubApi issues.
 
 	client stub get willReturn: response.
 
 	"When"
-	result := gitlabRessource
-		          getForRepo: 'Hello-World'
-		          ofOwner: 'octocat'
-		          withParms: data.
+	result := gitlabRessource getLatestsForOrg: 'octocat'.
 
 	"Then"
 	self assert: result isArray.
 	self assert: result size equals: 1.
-	self
-		assert: (result first at: #id)
-		equals: 1.
-		
-	self
-		assert: (result first at: #node_id)
-		equals: 'MDU6SXNzdWUx'.
-]
+	self assert: (result first at: #id) equals: 1.
 
-{ #category : 'tests' }
-GithubIssuesTest >> testGetIssueForRepoOfOwnerWithParms [
-
-	| hostUrl githubApi result client endpoint gitlabRessource data responseMessage response |
-	"Given"
-	hostUrl := 'https://www.url.com'.
-	client := ZnClient new.
-
-	githubApi := GithubApi new
-		             privateToken: 'token';
-		             hostUrl: hostUrl;
-		             client: client.
-
-	endpoint := '/endpoint'.
-	data := { } asDictionary.
-
-	response := self getIssueExample.
-
-	gitlabRessource := githubApi issues.
-
-	client stub get willReturn: response.
-
-	"When"
-	result := gitlabRessource
-		          getIssue: '1'
-		          ForRepo: 'Hello-World'
-		          ofOwner: 'octocat'
-					withParms: data.
-
-	"Then"
-	self assert: result isDictionary.
-	self
-		assert: (result at: #id)
-		equals: 1.
-	self
-		assert: (result at: #node_id)
-		equals: 'MDU6SXNzdWUx'
+	self assert: (result first at: #node_id) equals: 'MDU6SXNzdWUx'
 ]
 
 { #category : 'tests' }

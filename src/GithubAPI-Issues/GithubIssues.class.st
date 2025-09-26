@@ -6,16 +6,16 @@ Class {
 }
 
 { #category : 'from organisations' }
-GithubIssues >> getAllForOrg: anOrgName withParm: parms [
+GithubIssues >> getAllForOrg: anOrgName withParms: parms [
 	|endpoint|
 	endpoint := '/' join: { '/orgs' . anOrgName  . 'issues' }.
 	^ self getAll: endpoint withParams: parms. 
 ]
 
 { #category : 'from organisations' }
-GithubIssues >> getAllForOwner: anOrgName withParm: parms [
+GithubIssues >> getAllForOwner: anOrgName withParms: parms [
 
-	^ self getAllForOrg: anOrgName withParm: parms
+	^ self getAllForOrg: anOrgName withParms: parms
 ]
 
 { #category : 'from repos' }
