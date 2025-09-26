@@ -86,8 +86,8 @@ GithubIssues >> getLatestsForOwner: anOrgName [
 
 { #category : 'from repos' }
 GithubIssues >> getLatestsForRepo: aRepoName ofOwner: anOwnerName [
-
-
+	"https://docs.github.com/en/rest/issues/issues?apiVersion=2022-11-28#list-repository-issues"
+	"default 30"
 	^ self
 		  getForRepo: aRepoName
 		  ofOwner: anOwnerName
