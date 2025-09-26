@@ -93,3 +93,33 @@ GithubIssues >> getLatestsForRepo: aRepoName ofOwner: anOwnerName [
 		  ofOwner: anOwnerName
 		  withParms: Dictionary new
 ]
+
+{ #category : 'from sub issues' }
+GithubIssues >> getParentIssueOf: anIssueNumber ForRepo: aRepoName ofOwner: anOwnerName withParms: params [
+	"https://docs.github.com/en/rest/issues/sub-issues?apiVersion=2022-11-28#get-parent-issue"
+
+	| endpoint |
+	endpoint := '/' join: {
+			            '/repos'.
+			            anOwnerName.
+			            aRepoName.
+			            'issues'.
+			            anIssueNumber asString.
+			            'parent' }.
+	^ self get: endpoint withParams: params
+]
+
+{ #category : 'from sub issues' }
+GithubIssues >> getSubIssuesOf: anIssueNumber ForRepo: aRepoName ofOwner: anOwnerName withParms: params [
+	"https://docs.github.com/en/rest/issues/issues?apiVersion=2022-11-28#get-an-issue"
+
+	| endpoint |
+	endpoint := '/' join: {
+			            '/repos'.
+			            anOwnerName.
+			            aRepoName.
+			            'issues'.
+			            anIssueNumber asString.
+							'sub_issues' }.
+	^ self get: endpoint withParams: params
+]
