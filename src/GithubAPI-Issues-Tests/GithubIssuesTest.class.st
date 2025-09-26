@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-GithubIssuesTest >> issuesOrgsExamples [
+GithubIssuesTest >> getIssuesOrgsExample [
 	^ '[
   {
     "id": 1,
