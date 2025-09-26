@@ -16,18 +16,17 @@ GithubRessource >> defaultPerPageItem [
 
 { #category : 'api' }
 GithubRessource >> get: endpoint withParams: paramsDict [
+
 	| response |
-	
-	githubAPI client path: githubAPI hostUrl, endpoint.
-	paramsDict keysAndValuesDo: [ :key :value | githubAPI client queryAt: key put: value ].
+	githubAPI client path: githubAPI hostUrl , endpoint.
+	paramsDict keysAndValuesDo: [ :key :value |
+		githubAPI client queryAt: key put: value ].
 
 	response := githubAPI client get.
 
-	githubAPI output = 'json' ifTrue: [ ^response ].
-	
-	^NeoJSONReader fromString: response. 
-	
-	
+	githubAPI output = 'json' ifTrue: [ ^ response ].
+
+	^ NeoJSONReader fromString: response
 ]
 
 { #category : 'api' }
