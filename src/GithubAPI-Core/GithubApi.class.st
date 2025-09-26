@@ -69,6 +69,11 @@ GithubApi >> issues [
 	^ GithubIssues new githubAPI: self.
 ]
 
+{ #category : 'as yet unclassified' }
+GithubApi >> milestones [
+	^  GithubMilestones new githubAPI: self
+]
+
 { #category : 'organizations' }
 GithubApi >> organizations [
 	^ GithubOrganizations new githubAPI: self. 
