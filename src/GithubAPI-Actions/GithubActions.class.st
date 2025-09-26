@@ -42,6 +42,20 @@ GithubActions >> getAllForRepo: aRepoName ofOwner: anOwnerName withParms: parms 
 	^ self getAll: endpoint withParams: parms
 ]
 
+{ #category : 'get' }
+GithubActions >> getAllJobsForRun: aRunId forRepo: aRepoName ofOwner: anOwnerName [
+
+	| endpoint |
+	endpoint := '/' join: {
+			            '/repos'.
+			            anOwnerName.
+			            aRepoName.
+			            'actions/runs'.
+			            aRunId asString.
+			            'jobs' }.
+	^ self getAll: endpoint withParams: Dictionary new
+]
+
 { #category : 'as yet unclassified' }
 GithubActions >> getAllRunsForRepo: aRepoName ofOwner: anOwnerName [
 	"https://docs.github.com/en/rest/actions/workflow-runs?apiVersion=2022-11-28#list-workflow-runs-for-a-repository"
@@ -62,6 +76,19 @@ GithubActions >> getAllRunsForRepo: aRepoName ofOwner: anOwnerName withParms: pa
 	|endpoint|
 	endpoint := '/' join: { '/repos' . anOwnerName  . aRepoName . 'actions/runs' }.
 	^ self getAll: endpoint withParams: parms. 
+]
+
+{ #category : 'get' }
+GithubActions >> getJob: aJobId forRepo: aRepoName ofOwner: anOwnerName [
+
+	| endpoint |
+	endpoint := '/' join: {
+			            '/repos'.
+			            anOwnerName.
+			            aRepoName.
+			            'actions/jobs'.
+			            aJobId asString }.
+	^ self get: endpoint withParams: Dictionary new
 ]
 
 { #category : 'as yet unclassified' }
