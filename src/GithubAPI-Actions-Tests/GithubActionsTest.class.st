@@ -772,7 +772,6 @@ GithubActionsTest >> testGetAllForRepoOfOwner [
 { #category : 'tests' }
 GithubActionsTest >> testGetAllJobsForRunForRepoOfOwner [
 
-	
 	| hostUrl githubApi result client endpoint gitlabRessource data response |
 	"Given"
 	hostUrl := 'https://www.url.com'.
@@ -785,19 +784,20 @@ GithubActionsTest >> testGetAllJobsForRunForRepoOfOwner [
 
 	endpoint := '/' join:
 		            { '/repos'. 'octocat'. 'Hello-World'. 'actions'.
-		            'runs' . '123' . 'jobs' }.
-	data := { ('param' -> 'value') } asDictionary.
+		            'runs'. '123'. 'jobs' }.
+	data := {#filter -> 'all'} asDictionary.
 
 	response := NeoJSONReader fromString: self getJobsForRunExample.
 
 	gitlabRessource := githubApi actions.
 
-	(gitlabRessource stub getAll: endpoint withParams: Dictionary new)
+	(gitlabRessource stub getAll: endpoint withParams: data)
 		willReturn: response.
 
 	"When"
 	result := gitlabRessource
-		          getAllJobsForRun: 123 forRepo: 'Hello-World'
+		          getAllJobsForRun: 123
+		          forRepo: 'Hello-World'
 		          ofOwner: 'octocat'.
 
 	"Then"
@@ -940,15 +940,18 @@ GithubActionsTest >> testGetLatestsRunsForRepoOfOwner [
 		             hostUrl: hostUrl;
 		             client: client.
 
-	endpoint := '/endpoint'.
-	data := { ('param' -> 'value') } asDictionary.
+	endpoint := '/' join:
+		            { '/repos'. 'octocat'. 'Hello-World'. 'actions'.
+		            'runs' }.
+	data := { (#filter -> 'latest') } asDictionary.
 
 	responseMessage := 'Evref-BL'.
-	response := self getRunsExample.
+	response := NeoJSONReader fromString: self getRunsExample.
 
 	gitlabRessource := githubApi actions.
 
-	client stub get willReturn: response.
+	(gitlabRessource stub get: endpoint withParams: data) willReturn:
+		response.
 
 	"When"
 	result := gitlabRessource
@@ -997,6 +1000,45 @@ GithubActionsTest >> testGetRunForRepoOfOwner [
 	"Then"
 	self assert: result isDictionary.
 	self assert: (result at: #name) equals: 'Build'
+]
+
+{ #category : 'tests' }
+GithubActionsTest >> testGetRunsForRepoOfOwnerWithParms [
+
+	| hostUrl githubApi result client endpoint gitlabRessource data response |
+	"Given"
+	hostUrl := 'https://www.url.com'.
+	client := ZnClient new.
+
+	githubApi := GithubApi new
+		             privateToken: 'token';
+		             hostUrl: hostUrl;
+		             client: client.
+
+	endpoint := '/endpoint'.
+	data := {  } asDictionary.
+
+	response := self getRunsExample.
+
+	gitlabRessource := githubApi actions.
+
+	client stub get willReturn: response.
+
+	"When"
+	result := gitlabRessource
+		          getRunsForRepo: 'Hello-World'
+		          ofOwner: 'octocat'
+		          withParms: data.
+
+	"Then"
+	self assert: result isDictionary.
+
+	self
+		assert: (result at:#workflow_runs) isArray .
+		
+	self
+		assert: ((result at:#workflow_runs) first  at: #id)
+		equals: 30433642
 ]
 
 { #category : 'tests' }
